@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'quizzes/results.css' %}">
+    <meta charset="UTF-8">
+    <title> Результаты </title>
+</head>
+<body>
+    <div class="full_container">
+
+        <h1 class="results_title"> Результаты </h1>
+        <p class="correct_to_total">{{ amount_correct }}/{{ total }}</p>
+        <p class="accuracy">{{ accuracy }}</p>
+        <a class="home_button" href="{% url 'quizzes:index' %}"> На стартовую страницу </a>
+        <a class="home_button" href="{% url 'quizzes:single_quiz' quiz.id %}"> Попробовать еще раз </a>
+    </div>
+
+</body>
+</html>
