@@ -1,20 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'quizzes/results.css' %}">
-    <meta charset="UTF-8">
-    <title> Результаты </title>
-</head>
+{% extends "base.html" %}
+{% block title %} Результаты {% endblock %}
+{% block content %}
 <body>
     <div class="full_container">
-
         <h1 class="results_title"> Результаты </h1>
         <p class="correct_to_total">{{ amount_correct }}/{{ total }}</p>
         <p class="accuracy">{{ accuracy }}</p>
-        <a class="home_button" href="{% url 'quizzes:index' %}"> На стартовую страницу </a>
-        <a class="home_button" href="{% url 'quizzes:single_quiz' quiz.id %}"> Попробовать еще раз </a>
+        <br>
+        <br>
+        {% for key, value in data.items %}
+          <p class="see_questions_in_results"> {{ key }} </p>
+          {% for i in value %}
+            {% if i in answers_correct %}
+              <p class="see_choices_in_results_right"> {{ i }} </p>
+            {% elif i in answers_given %}
+              <p class="see_choices_in_results_wrong"> {{ i }} </p>
+            {% else %}
+              <p class="see_choices_in_results"> {{ i }} </p>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+        <br>
+        <a class="link" href="{% url 'quizzes:index' %}"> На стартовую страницу </a>
+        <a class="link" href="{% url 'quizzes:single_quiz' quiz.id %}"> Попробовать еще раз </a>
     </div>
 
 </body>
-</html>
+{% endblock %}

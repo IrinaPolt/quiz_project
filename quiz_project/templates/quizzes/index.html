@@ -1,47 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'quiz/index.css' %}">
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
+{% extends "base.html" %}
+{% block title %} Главная страница {% endblock %}
+{% block content %}
 <body>
-
     <div class="area" >
-            <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            </ul>
-
         <div class="top_container">
             <h1 class="site_title"> Quiz website </h1>
+            <br>
+            <br>
             <p class="site_description"> Пройдите существующие тесты или создайте свой </p>
             <a class="create_quiz" href="{% url 'quizzes:create_quiz' %}"> Создать </a>
         </div>
 
         {% if quizzes %}
-
             <section class="card_container">
                     {% for quiz in quizzes %}
                         <a class="card" href="{% url 'quizzes:single_quiz' quiz.id %}">
                             <h3 class="quiz_title">{{ quiz.title }}</h3>
-                            <h6 class="num_questions">{{ quiz.amount_questions }} вопросов </h6>
+                            {% if quiz.amount_questions == 1 %}
+                              <h6 class="num_questions"> {{ quiz.amount_questions }} вопрос </h6>
+                            {% elif quiz.amount_questions > 4 %}
+                              <h6 class="num_questions"> {{ quiz.amount_questions }} вопросов </h6>
+                            {% else %}
+                              <h6 class="num_questions"> {{ quiz.amount_questions }} вопроса </h6>
+                            {% endif %}
                         </a>
                     {% endfor %}
             </section>
 
         {% else %}
-            <p> Нет доступных тестов</p>
+            <br>
+            <p> Кажется, у нас нет доступных тестов </p>
         {% endif %}
 
         <br>
@@ -49,4 +37,4 @@
         <br>
     </div>
 </body>
-</html>
+{% endblock %}

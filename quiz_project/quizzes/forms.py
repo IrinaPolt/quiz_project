@@ -1,7 +1,10 @@
 from django import forms
+from django.core.exceptions import ValidationError
+
+from .models import Quiz
 
 
-class QuizForm(forms.Form):
+class QuizForm(forms.ModelForm):
     title = forms.CharField(
         max_length=50,
         label='Название теста',
@@ -11,6 +14,10 @@ class QuizForm(forms.Form):
         label='Количество вопросов',
         widget=forms.NumberInput(attrs={'class': 'num_questions_box'})
     )
+
+    class Meta:
+        model = Quiz
+        fields = ['title', 'amount_questions']
 
 
 class QuestionForm(forms.Form):
@@ -59,3 +66,19 @@ class QuestionForm(forms.Form):
         required=False,
         widget=forms.CheckboxInput(attrs={'class': 'choice_correct_box'})
     )
+
+    def clean(self):
+        answer_list = [
+            self.cleaned_data['choice1_correctness'],
+            self.cleaned_data['choice2_correctness'],
+            self.cleaned_data['choice3_correctness'],
+            self.cleaned_data['choice4_correctness']]
+
+        #right = 0
+        #for answer in answer_list:
+            #if answer == True:
+                #right += 1
+
+        #if right != 1:
+            #raise ValidationError('Может быть только один правильный вариант ответа')
+        return self.cleaned_data

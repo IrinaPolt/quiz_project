@@ -12,7 +12,6 @@ class Quiz(models.Model):
     class Meta:
         verbose_name = 'Тест'
         verbose_name_plural = 'Тесты'
-        order = ['-id']
 
     def __str__(self):
         return self.title
@@ -30,6 +29,10 @@ class Question(models.Model):
         default=0,
         verbose_name='Номер вопроса')
 
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
     def __str__(self):
         return self.text
 
@@ -45,6 +48,10 @@ class Choice(models.Model):
     correct = models.BooleanField(
         default=False,
         verbose_name='Правильность ответа')
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
 
     def __str__(self):
         return self.choice_text

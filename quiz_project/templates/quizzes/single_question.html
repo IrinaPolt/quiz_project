@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'quizzes/single_question.css' %}">
-    <meta charset="UTF-8">
-    <title>Вопрос</title>
-</head>
+{% extends "base.html" %}
+{% block title %} Вопрос {% endblock %}
+{% block content %}
 <body>
-    <div class="waveWrapper waveAnimation">
-      <div class="waveWrapperInner bgTop">
-        <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
-      </div>
-      <div class="waveWrapperInner bgMiddle">
-        <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
-      </div>
-      <div class="waveWrapperInner bgBottom">
-        <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
-      </div>
-    </div>
-
-    <div class="full_container">
+    <div class="question_full_container">
         <h2 class="question_title">{{ current_question.text }}</h2>
-
         {% if error_message %}
             <p><strong>{{ error_message }}</strong></p>
         {% endif %}
@@ -41,4 +23,4 @@
         </form>
     </div>
 </body>
-</html>
+{% endblock %}

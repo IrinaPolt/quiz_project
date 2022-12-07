@@ -1,21 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'quizzes/single_quiz.css' %}">
-    <meta charset="UTF-8">
-    <title> Тест </title>
-</head>
+{% extends "base.html" %}
+{% block title %} Тест {% endblock %}
+{% block content %}
 <body>
-
     <div class="full_container">
         <h1 class="quiz_title">{{ quiz.title }}</h1>
-        <h4 class="num_questions">{{ num_questions }} вопросов </h4>
-        <a class="home_button" href="{% url 'quizzes:single_question' quiz.id 1 %}">Start Quiz</a>
-        <br>
-        <br>
-        <br>
-        <a class="home_button" href="{% url 'quizzes:index' %}"> На главную страницу</a>
+        {% if quiz.amount_questions == 1 %}
+          <h4 class="num_questions"> {{ quiz.amount_questions }} вопрос </h4>
+        {% elif quiz.amount_questions > 4 %}
+          <h4 class="num_questions"> {{ quiz.amount_questions }} вопросов </h4>
+        {% else %}
+          <h4 class="num_questions"> {{ quiz.amount_questions }} вопроса </h4>
+        {% endif %}
+        <a class="link" href="{% url 'quizzes:single_question' quiz.id 1 %}"> Начать тест </a>
+        <a class="link" href="{% url 'quizzes:index' %}"> На главную страницу</a>
     </div>
 </body>
-</html>
+{% endblock %}
