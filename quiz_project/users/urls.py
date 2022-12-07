@@ -9,6 +9,8 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
+    path('<int:user_id>/', views.personal_page, name='me'),
+    path('delete/<int:quiz_id>/', views.delete_result, name='delete_result'),
     path('logout/',
          LogoutView.as_view(template_name='users/logged_out.html'),
          name='logout'),

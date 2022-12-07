@@ -21,8 +21,9 @@
           {% endfor %}
         {% endfor %}
         <br>
-        <a class="link" href="{% url 'quizzes:index' %}"> На стартовую страницу </a>
+        <a class="link" href="{% url 'quizzes:add_achievement' quiz.id %}"> Сохранить в мои достижения </a>
         <a class="link" href="{% url 'quizzes:single_quiz' quiz.id %}"> Попробовать еще раз </a>
+        <a class="link" href="{% url 'quizzes:index' %}"> На стартовую страницу </a>
     </div>
 
 </body>

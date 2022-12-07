@@ -496,6 +496,35 @@
     border-radius: 20px;
   }
 
+  .link_categories {
+    position: relative;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-left: 10px;
+    z-index: 4;
+    background-color: #684aa3;
+    text-decoration: none;
+    color: white;
+    font-family: Roboto;
+    font-size: 15px;
+    padding-top: 12px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+  }
+
+  .link_categories:hover {
+    background-color: #a932b0;
+    color: white;
+    border: 2px white;
+  }
+
+  .link_categories:focus {
+    background-color: rgb(198, 19, 114);
+    color: black;
+  }
+
   .link:hover {
     background-color: #4e2d90;
     color: white;
@@ -508,7 +537,6 @@
   }
   
   
-
   .card_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -545,6 +573,57 @@
     margin-right: 10px;
     margin-top: 5px;
     border-radius: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .category_title {
+    color: white;
+    font-family: Roboto;
+    font-size: 40px;
+    background-color: #ae49b6;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 5px;
+    border-radius: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border: 3px solid white;
+  }
+
+  .user_title {
+    color: white;
+    font-family: Roboto;
+    font-size: 40px;
+    background-color: #ae49b6;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 5px;
+    border-radius: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border: 3px solid white;
+  }
+
+  .quiz_result {
+    color: rgb(138, 10, 230);
+    font-family: Roboto;
+    font-size: 30px;
+    margin-left: 250px;
+    margin-right: 250px;
+    margin-top: 5px;
+    border-radius: 30px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
+  .category_description {
+    color: white;
+    font-family: Roboto;
+    font-size: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 5px;
     padding-bottom: 20px;
     padding-top: 20px;
   }

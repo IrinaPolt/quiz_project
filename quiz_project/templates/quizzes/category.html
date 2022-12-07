@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Страница категории {% endblock %}
+{% block content %}
+<body>
+  <div class="top_container">
+    <h1 class="category_title"> {{ category.title }} </h1>
+    <br>
+    <p class="category_description"> {{ category.description }} </p>
+    <br>
+  </div>
+  {% if quizzes %}
+    <section class="card_container">
+      {% for quiz in quizzes %}
+        <a class="card" href="{% url 'quizzes:single_quiz' quiz.quiz.id %}">
+          <h3 class="quiz_title">{{ quiz.quiz.title }}</h3>
+          {% if quiz.amount_questions == 1 %}
+            <h6 class="num_questions"> {{ quiz.quiz.amount_questions }} вопрос </h6>
+          {% elif quiz.amount_questions > 4 %}
+            <h6 class="num_questions"> {{ quiz.quiz.amount_questions }} вопросов </h6>
+          {% else %}
+            <h6 class="num_questions"> {{ quiz.quiz.amount_questions }} вопроса </h6>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </section>
+
+  {% else %}
+    <br>
+    <p> Кажется, в этой категории нет доступных тестов </p>
+  {% endif %}
+</body>
+{% endblock %}

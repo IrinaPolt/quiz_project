@@ -1,19 +1,32 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .models import Quiz, Question, Choice
+from .models import Quiz, Question, Choice, Category, QuizInCategory
+from users.models import Achievements, QuizInAchievements
 
 from .forms import QuizForm, QuestionForm
 
 
 def index(request):
     quizzes = Quiz.objects.all()
+    categories = Category.objects.all
     context = {
         'quizzes': quizzes,
+        'categories': categories,
     }
     return render(request, 'quizzes/index.html', context)
+
+
+def category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    quizzes = QuizInCategory.objects.filter(category=category)
+    context = {
+        'category': category,
+        'quizzes': quizzes,
+    }
+    return render(request, 'quizzes/category.html', context)
 
 
 def single_quiz(request, quiz_id):
@@ -97,6 +110,7 @@ def results(request, quiz_id):
     amount_wrong = request.session['amount_wrong']
     total = amount_correct + amount_wrong
     accuracy = amount_correct / total
+    request.session['result'] = accuracy
     context = {
         'amount_correct': amount_correct,
         'amount_wrong': amount_wrong,
@@ -108,6 +122,20 @@ def results(request, quiz_id):
         'answers_given': answers_given,
     }
     return render(request, 'quizzes/results.html', context)
+
+
+@login_required
+def add_results(request, quiz_id):
+    user = request.user
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    achievements = Achievements.objects.get_or_create(user=request.user)
+    obj, created = QuizInAchievements.objects.update_or_create(
+        defaults={'result': '{:.0%}'.format(request.session['result'])},
+        quiz=quiz,
+        user_achievements=achievements[0],
+    )
+    return HttpResponseRedirect(reverse('users:me', args=(user.pk,)))
+
 
 @login_required
 def create_quiz(request):
