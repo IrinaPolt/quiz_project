@@ -12,6 +12,7 @@
           <h4 class="num_questions"> {{ quiz.amount_questions }} вопроса </h4>
         {% endif %}
         <a class="link" href="{% url 'quizzes:single_question' quiz.id 1 %}"> Начать тест </a>
+        <a class="link" href="{% url 'quizzes:choose_category' quiz.id %}"> Выбрать категорию </a>
         <a class="link" href="{% url 'quizzes:index' %}"> На главную страницу</a>
     </div>
 </body>

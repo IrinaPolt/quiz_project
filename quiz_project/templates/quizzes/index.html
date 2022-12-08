@@ -8,7 +8,8 @@
         <a class="link" href="{% url 'users:logout' %}"> Выйти </a>
         <a class="link" href="{% url 'users:me' request.user.pk %}"> Мои результаты </a>
       {% else %}
-        <a class="link" href="{% url 'users:signin' %}"> Войти </a>
+        <a class="link" href="{% url 'users:login' %}"> Войти </a>
+        <a class="link" href="{% url 'users:signup' %}"> Зарегистрироваться </a>
       {% endif %}
         <div class="top_container">
             <h1 class="site_title"> Quiz website </h1>

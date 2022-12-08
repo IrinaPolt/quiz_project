@@ -1,13 +1,21 @@
 from django.contrib import admin
 from django.db.models import Count
 
-from .models import Quiz, Question, Choice, Category, QuizInCategory
+from .models import Quiz, Question, Category, QuizInCategory, ChoiceInQuestion, QuestionInQuiz, Choice
 
 from users.models import Achievements, QuizInAchievements
 
 
 class QuizInAchievementsInlineAdmin(admin.TabularInline):
     model = QuizInAchievements
+
+
+class ChoiceInQuestionInlineAdmin(admin.TabularInline):
+    model = ChoiceInQuestion
+
+
+class QuestionInQuizInlineAdmin(admin.TabularInline):
+    model = QuestionInQuiz
 
 
 @admin.register(Achievements)
@@ -31,23 +39,16 @@ class QuizInCategoryInlineAdmin(admin.TabularInline):
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'quiz', 'text', 'question_num')
-    list_filter = ('quiz', )
-    search_fields = ('quiz__title', 'text')
+    list_display = ('pk', 'text', 'question_num')
+    search_fields = ('text', )
+    inlines = [ChoiceInQuestionInlineAdmin, ]
 
 
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    inlines = [QuizInCategoryInlineAdmin, ]
+    inlines = [QuizInCategoryInlineAdmin, QuestionInQuizInlineAdmin]
     list_display = ('pk', 'title', 'amount_questions')
     list_filter = ('title', )
-
-
-@admin.register(Choice)
-class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'question', 'choice_text', 'correct')
-    list_filter = ('question', )
-    search_fields = ('question__quiz__title', 'question__text') # by far case sensitive
 
 
 @admin.register(Category)
@@ -62,3 +63,8 @@ class CategoryAdmin(admin.ModelAdmin):
     @staticmethod
     def get_quizzes_count(obj):
         return obj.quizzes_count
+
+@admin.register(Choice)
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'choice_text', 'correct')
+    list_filter = ('correct', )

@@ -88,6 +88,14 @@
     color: #52106d;
   }
 
+  .card-body-signup {
+    font-family: Roboto;
+    font-size: 15pt;
+    color: #bba7c3;
+    margin-left: 350px;
+    margin-right: 400px;
+  }
+
   .question_title {
     font-size: 50px;
     color: white;
@@ -536,7 +544,15 @@
     color: black;
   }
   
-  
+  .alert{position:relative;padding:1rem 1rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem}
+  .alert-danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7}
+  .form-text{
+    margin-top:.25rem;
+    margin-left: 10px;
+    font-size:.7em;
+    text-align: left;
+    color:#1a65a7}
+
   .card_container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -595,6 +611,7 @@
     color: white;
     font-family: Roboto;
     font-size: 40px;
+    text-align: center;
     background-color: #ae49b6;
     margin-left: 250px;
     margin-right: 250px;

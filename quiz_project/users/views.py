@@ -29,7 +29,8 @@ def personal_page(request, user_id):
 
 
 def delete_result(request, quiz_id):
+    achievements = get_object_or_404(Achievements, user=request.user)
     quiz = get_object_or_404(Quiz, pk=quiz_id)
-    result = get_object_or_404(QuizInAchievements, quiz=quiz)
+    result = get_object_or_404(QuizInAchievements, quiz=quiz, user_achievements=achievements)
     result.delete()
     return render(request, 'users/user.html')

@@ -16,6 +16,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'quizzes:index'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',

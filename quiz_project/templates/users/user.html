@@ -7,7 +7,8 @@
             <h1 class="user_title"> {{ user.username }} </h1>
             <br>
             <br>
-            <a class="create_quiz" href="{% url 'quizzes:create_quiz' %}"> Создать свой тест </a>
+            <a class="link" href="{% url 'quizzes:create_quiz' %}"> Создать свой тест </a>
+            <a class="link" href="{% url 'users:logout' %}"> Выйти из профиля </a>
             <br>
         </div>
         <br>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Вы вышли из системы{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="site_title">
+    Выход
+  </div>
+  <br>
+  <div class="site_description">
+    <p> Вы вышли из своей учётной записи. Вы все еще можете проходить тесты без записи прогресса! </p>
+  </div>
+  <a class="link" href="{% url 'quizzes:index' %}"> На главную страницу</a>
+  <br>
+  <br>
+</div>
+{% endblock %}

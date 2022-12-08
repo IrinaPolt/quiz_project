@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} Выбор категории для теста {% endblock %}
+{% block content %}
+<body>
+      <br>
+        <div class="top_container">
+            <h1 class="category_title"> Выберите подходящую категорию </h1>
+            <br>
+        </div>
+        <div class="middle_container">
+          {% if categories %}
+            <section class="card_container">
+                {% for category in categories %}
+                  <section class="card">
+                    <h3 class="category_title">{{ category.title }}</h3>
+                    <h4 class="category_description"> {{ category.description }}</h3>
+                    <a class="link" href="{% url 'quizzes:add_to_category' category.id quiz.id %}"> Добавить тест в категорию </a>
+                  </section>
+                {% endfor %}
+            </section>
+
+        {% else %}
+            <br>
+            <p> Кажется, у нас еще нет категорий </p>
+        {% endif %}
+        </div>
+</body>
+{% endblock %}

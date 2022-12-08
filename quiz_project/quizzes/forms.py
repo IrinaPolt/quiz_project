@@ -74,11 +74,11 @@ class QuestionForm(forms.Form):
             self.cleaned_data['choice3_correctness'],
             self.cleaned_data['choice4_correctness']]
 
-        #right = 0
-        #for answer in answer_list:
-            #if answer == True:
-                #right += 1
+        right = 0
+        for answer in answer_list:
+            if answer == True:
+                right += 1
 
-        #if right != 1:
-            #raise ValidationError('Может быть только один правильный вариант ответа')
+        if right != 1:
+            raise ValidationError('Должен быть один правильный вариант ответа')
         return self.cleaned_data

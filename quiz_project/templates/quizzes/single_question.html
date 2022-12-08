@@ -3,16 +3,16 @@
 {% block content %}
 <body>
     <div class="question_full_container">
-        <h2 class="question_title">{{ current_question.text }}</h2>
+        <h2 class="question_title">{{ current_question.question.text }}</h2>
         {% if error_message %}
             <p><strong>{{ error_message }}</strong></p>
         {% endif %}
         <br>
-        <form action="{% url 'quizzes:answer' quiz.id current_question.question_num %}" method="post">
+        <form action="{% url 'quizzes:answer' quiz.id question_id %}" method="post">
         {% csrf_token %}
 
             <div class="radio-toolbar">
-                {% for choice in current_question.choice_set.all %}
+                {% for choice in all_choices %}
                     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
                     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
                     <br>
