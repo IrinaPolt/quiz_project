@@ -76,7 +76,7 @@ class QuestionForm(forms.Form):
 
         right = 0
         for answer in answer_list:
-            if answer == True:
+            if answer is True:
                 right += 1
 
         if right != 1:

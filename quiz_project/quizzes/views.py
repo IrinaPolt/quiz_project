@@ -1,12 +1,13 @@
-from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Quiz, Question, Choice, Category, QuizInCategory, ChoiceInQuestion, QuestionInQuiz
 from users.models import Achievements, QuizInAchievements
 
-from .forms import QuizForm, QuestionForm
+from .forms import QuestionForm, QuizForm
+from .models import (Category, Choice, ChoiceInQuestion, Question,
+                     QuestionInQuiz, Quiz, QuizInCategory)
 
 
 def index(request):
@@ -73,7 +74,8 @@ def answer(request, quiz_id, question_id):
     if question_id == (len(questions)):
         next_or_submit = 'Завершить тест'
     try:
-        selected_choice = current_question.question.choices.get(pk=request.POST['choice'])
+        selected_choice = current_question.question.choices.get(
+            pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'quizzes/single_question.html', {
             'quiz': quiz,
@@ -90,22 +92,25 @@ def answer(request, quiz_id, question_id):
         request.session[str(question_id) + 'selected'] = str(selected_choice)
         request.session[str(question_id) + 'correct'] = str(correct_answer)
         if question_id == (len(questions)):
-            return HttpResponseRedirect(reverse('quizzes:results', args=(quiz.id,)))
-        else :
-            return HttpResponseRedirect(reverse('quizzes:single_question', args=(quiz.id, question_id+1,)))
+            return HttpResponseRedirect(reverse(
+                'quizzes:results', args=(quiz.id,)))
+        else:
+            return HttpResponseRedirect(reverse(
+                'quizzes:single_question', args=(quiz.id, question_id+1,)))
 
 
 def results(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     questions = QuestionInQuiz.objects.filter(quiz=quiz)
-    data = {} # вопросы для вывода
-    answers_correct = [] # правильные ответы для вывода
-    answers_given = [] # ответы пользователя для вывода
+    data = {}  # вопросы для вывода
+    answers_correct = []  # правильные ответы для вывода
+    answers_given = []  # ответы пользователя для вывода
     num = 0
     for question in questions:
         num += 1
         all_choices = question.question.choices.all()
-        data[str(num) + '. ' + question.question.text] = [str(item) for item in all_choices]
+        data[str(num) + '. ' + question.question.text] = [
+            str(item) for item in all_choices]
         answers_correct.append(request.session[str(num) + 'correct'])
         answers_given.append(request.session[str(num) + 'selected'])
     amount_correct = request.session['amount_correct']
@@ -141,7 +146,7 @@ def choose_category(request, quiz_id):
 def add_to_category(request, quiz_id, category_id):
     category = get_object_or_404(Category, pk=category_id)
     quiz = get_object_or_404(Quiz, pk=quiz_id)
-    added = QuizInCategory.objects.get_or_create(quiz=quiz, category=category)
+    QuizInCategory.objects.get_or_create(quiz=quiz, category=category)
     return HttpResponseRedirect(reverse('quizzes:index'))
 
 
@@ -164,7 +169,8 @@ def create_quiz(request):
         form = QuizForm(request.POST)
         if form.is_valid():
             quiz = form.save()
-            return HttpResponseRedirect(reverse('quizzes:create_question', args=(quiz.id, 1,)))
+            return HttpResponseRedirect(
+                reverse('quizzes:create_question', args=(quiz.id, 1,)))
     else:
         form = QuizForm()
     context = {
@@ -179,26 +185,36 @@ def create_question(request, quiz_id, question_id):
         form = QuestionForm(request.POST)
         if form.is_valid():
             text = form.data['text']
-            question = Question.objects.create(text=text, question_num=question_id)
+            question = Question.objects.create(
+                text=text,
+                question_num=question_id)
 
             choice1_text = form.cleaned_data['choice1_text']
             choice1_correctness = form.cleaned_data['choice1_correctness']
-            choice1 = Choice.objects.create(choice_text=choice1_text, correct=choice1_correctness)
+            choice1 = Choice.objects.create(
+                choice_text=choice1_text,
+                correct=choice1_correctness)
             ChoiceInQuestion.objects.create(question=question, choice=choice1)
 
             choice2_text = form.cleaned_data['choice2_text']
             choice2_correctness = form.cleaned_data['choice2_correctness']
-            choice2 = Choice.objects.create(choice_text=choice2_text, correct=choice2_correctness)
+            choice2 = Choice.objects.create(
+                choice_text=choice2_text,
+                correct=choice2_correctness)
             ChoiceInQuestion.objects.create(question=question, choice=choice2)
 
             choice3_text = form.cleaned_data['choice3_text']
             choice3_correctness = form.cleaned_data['choice3_correctness']
-            choice3 = Choice.objects.create(choice_text=choice3_text, correct=choice3_correctness)
+            choice3 = Choice.objects.create(
+                choice_text=choice3_text,
+                correct=choice3_correctness)
             ChoiceInQuestion.objects.create(question=question, choice=choice3)
 
             choice4_text = form.cleaned_data['choice4_text']
             choice4_correctness = form.cleaned_data['choice4_correctness']
-            choice4 = Choice.objects.create(choice_text=choice4_text, correct=choice4_correctness)
+            choice4 = Choice.objects.create(
+                choice_text=choice4_text,
+                correct=choice4_correctness)
             ChoiceInQuestion.objects.create(question=question, choice=choice4)
 
             quiz.questions.add(question)
@@ -206,7 +222,10 @@ def create_question(request, quiz_id, question_id):
             if question_id == quiz.amount_questions:
                 return HttpResponseRedirect(reverse('quizzes:index'))
             else:
-                return HttpResponseRedirect(reverse('quizzes:create_question', args=(quiz_id, question_id+1,)))
+                return HttpResponseRedirect(
+                    reverse(
+                        'quizzes:create_question',
+                        args=(quiz_id, question_id+1,)))
         else:
             if question_id == quiz.amount_questions:
                 next_submit = 'Добавить тест'

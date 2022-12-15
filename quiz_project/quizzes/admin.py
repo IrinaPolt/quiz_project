@@ -1,9 +1,10 @@
 from django.contrib import admin
 from django.db.models import Count
 
-from .models import Quiz, Question, Category, QuizInCategory, ChoiceInQuestion, QuestionInQuiz, Choice
-
 from users.models import Achievements, QuizInAchievements
+
+from .models import (Category, Choice, ChoiceInQuestion, Question,
+                     QuestionInQuiz, Quiz, QuizInCategory)
 
 
 class QuizInAchievementsInlineAdmin(admin.TabularInline):
@@ -27,7 +28,7 @@ class AchievementsAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         return queryset.annotate(quizzes_count=Count('quizinachievements'))
-    
+
     @staticmethod
     def get_quizzes_count(obj):
         return obj.quizzes_count
@@ -59,10 +60,11 @@ class CategoryAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         return queryset.annotate(quizzes_count=Count('quizincategory'))
-    
+
     @staticmethod
     def get_quizzes_count(obj):
         return obj.quizzes_count
+
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
