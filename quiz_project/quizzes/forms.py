@@ -79,6 +79,6 @@ class QuestionForm(forms.Form):
             if answer is True:
                 right += 1
 
-        if right != 1:
-            raise ValidationError('Должен быть один правильный вариант ответа')
+        if right > 1:
+            raise ValidationError('Должен быть 2+ правильный вариант ответа')
         return self.cleaned_data
