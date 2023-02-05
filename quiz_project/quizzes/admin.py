@@ -7,6 +7,8 @@ from .models import (Category, Choice, ChoiceInQuestion, Question,
                      QuestionInQuiz, Quiz, QuizInCategory)
 
 
+# тест для google colab
+
 class QuizInAchievementsInlineAdmin(admin.TabularInline):
     model = QuizInAchievements
 
